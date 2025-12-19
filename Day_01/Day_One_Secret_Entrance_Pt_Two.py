@@ -25,50 +25,52 @@ The dial is rotated L1 to point at 99.
 The dial is rotated L99 to point at 0.
 The dial is rotated R14 to point at 14.
 The dial is rotated L82 to point at 32; during this rotation, it points at 0 once.
-In this example, the dial points at 0 three times at the end of a rotation, plus three more times during a rotation. So, in this example, the new password would be 6.
+In this example, the dial points at 0 three times at the end of a rotation, plus three 
+more times during a rotation. So, in this example, the new password would be 6.
 
-Be careful: if the dial were pointing at 50, a single rotation like R1000 would cause the dial to point at 0 ten times before returning back to 50!
+Be careful: if the dial were pointing at 50, a single rotation like R1000 would cause the 
+dial to point at 0 ten times before returning back to 50!
 
 Using password method 0x434C49434B, what is the password to open the door?"""
 
-#PasswordRotations = open("Day_One_Secret_Entrance_Input.txt").read().split('\n')
-PasswordRotations = open("Day_One_Secret_Entrance_Test_Input.txt").read().split('\n')
+PasswordRotations = open("Day_One_Secret_Entrance_Input.txt").read().split('\n')
+#PasswordRotations = open("Day_One_Secret_Entrance_Test_Input.txt").read().split('\n')
 
-print(len(PasswordRotations))
+#print(len(PasswordRotations))
 password = 0
 currPos = 50
 
 for r in PasswordRotations:
 	#print("The Rotations are: " + str(r))
 	"""Right is up, Left is down"""
-	#print("direction is: " + str(r[0]))
+	#print(str(currPos))
 	if(str(r[0]) == "L"):
-		#print("Going down - " + str(r[1:]))
-		currPos = str(int(currPos) - int(str(r[1:])))
-		#print(str(currPos))
-		if(int(currPos) < 0):
-			#print("Less than zero.")
-			currPos = str(int(currPos) % 100)
-			#print(currPos)
-		if(int(currPos) == 0):
-			#print("Is zero.")
-			password = password + 1
+		#print("Going Down - " + str(r[1:]) + " clicks.")
+		rotationCount = int(r[1:])
+		while(rotationCount > 0):
+			#print(str(rotationCount))
+			rotationCount = rotationCount - 1
+			currPos = currPos - 1
+			if(currPos == 0):
+				password = password + 1
+			if(currPos == -1):
+				currPos = 99
 	else:
-		#print("Going up - " + str(r[1:]))
-		currPos = str(int(currPos) + int(str(r[1:])))
-		#print(str(currPos))
-		if(int(currPos) > 99):
-			#print("Greater than 99.")
-			currPos = str(int(currPos) % 100)
-			#print(currPos)
-		if(int(currPos) == 0):
-			#print("Is zero.")
-			password = password + 1
-	print("Current position is: " + str(currPos))
-	print("Password is: " + str(password))
+		#print("Going up." + str(r[1:]) + " clicks.")
+		rotationCount = int(r[1:])
+		while(rotationCount > 0):
+			#print(str(rotationCount))
+			rotationCount = rotationCount - 1
+			currPos = currPos + 1
+			if(currPos == 100):
+				currPos = 0
+			if(currPos == 0):
+				password = password + 1
+			
+	
+	#print("Current position is: " + str(currPos))
+	#print("Password is: " + str(password))
 
 
 print("Password is: " + str(password))
-print("Location answer is NOT 317")
-print("Location answer is 1135")
-print("Location answer is: ")
+print("Password answer is 6558")
